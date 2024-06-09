@@ -1,11 +1,16 @@
-﻿namespace Zadanie9.Services;
+﻿using Zadanie9.Models;
 
-public class IdBService
+namespace Zadanie9.Services;
+
+public interface IdBService
 {
-    // Task<ICollection<Order>> GetOrdersData(string? clientLastName);
-    // Task<bool> DoesClientExist(int clientID);
-    // Task<bool> DoesEmployeeExist(int employeeID);
-    // Task AddNewOrder(Order order);
-    // Task<Pastry?> GetPastryByName(string name);
-    // Task AddOrderPastries(IEnumerable<OrderPastry> orderPastries);
+    Task<ICollection<Patient>> GetPatientsData(string? patientLastName);
+    Task<bool> DoesPatientExist(int patientID);
+    Task<bool> DoesMedicamentExist(int medicamentID);
+    Task AddNewPatient(Patient patient);
+    Task AddNewPrescription(Prescription prescription);
+    Task<int> GetNewPrescriptionId();
+    Task AddNewPrescriptionMedicament(IEnumerable<PrescriptionMedicament> prescriptionMedicament);
+
+    
 }
