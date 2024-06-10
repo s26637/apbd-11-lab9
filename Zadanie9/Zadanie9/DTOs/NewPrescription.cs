@@ -26,8 +26,8 @@ public class NewPrescription
     [Required]
     public DateTime DueDate { get; set; }
     
-    
-    public ICollection<MedicamentDTO> Medicament { get; set; } = new List<MedicamentDTO>();
+    [Required]
+    public ICollection<MedicamentDTO> MedicamentList { get; set; } = new List<MedicamentDTO>();
 
     
 }
@@ -35,7 +35,7 @@ public class NewPrescription
 public class MedicamentDTO
 {
     [Required] 
-    public int IdP;
+    public int IdP { get; set; }
     
     public int Dose { get; set; }
     

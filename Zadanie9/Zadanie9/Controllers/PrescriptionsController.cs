@@ -7,6 +7,7 @@ using Zadanie9.Services;
 
 namespace Zadanie9.Controllers;
 
+[ApiController]
 public class PrescriptionsController : ControllerBase
 {
     
@@ -20,6 +21,22 @@ public class PrescriptionsController : ControllerBase
 
     public async Task<IActionResult> AddNewPrescription(NewPrescription newPrescription)
     {
+
+        foreach (var VARIABLE in newPrescription.MedicamentList)
+        {
+            Console.Write(VARIABLE);
+        }
+        
+        if (newPrescription.MedicamentList.Count > 9)
+        {
+            return BadRequest("More than 9 Medicaments");
+        }
+
+        if (newPrescription.Date > newPrescription.DueDate)
+        {
+            return BadRequest("Wrong dates");
+        }
+        
         if (!await _dbService.DoesPatientExist(newPrescription.IdPatient))
         {
                var patient = new Patient()
@@ -40,7 +57,7 @@ public class PrescriptionsController : ControllerBase
          
             
         
-        foreach (var item in newPrescription.Medicament)
+        foreach (var item in newPrescription.MedicamentList)
         {
             if (!await _dbService.DoesMedicamentExist(item.IdP))
                 return NotFound($"Medicament with given ID - {item} doesn't exist");
@@ -67,7 +84,7 @@ public class PrescriptionsController : ControllerBase
         }
         
         
-        foreach (var item in newPrescription.Medicament)
+        foreach (var item in newPrescription.MedicamentList)
         {
             
             prescMedicaList.Add(new PrescriptionMedicament
@@ -77,8 +94,7 @@ public class PrescriptionsController : ControllerBase
                 Dose = item.Dose,
                 Details = item.Details
             });
-
-          
+            
         }
         
         using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
